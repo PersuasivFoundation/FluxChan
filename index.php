@@ -4,7 +4,7 @@ $boards = array_filter(glob("boards/*"), "is_dir");
 
 <!DOCTYPE html>
 <html>
-<head><title>MiniChan</title></head>
+<head><title>OpenChan</title></head>
 <body>
 <h1>Boards</h1>
 <ul>
