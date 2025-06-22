@@ -67,7 +67,7 @@ $pagedThreads = array_slice($threadFolders, $start, $threadsPerPage);
 <head>
     <title>/<?= htmlspecialchars($board) ?>/</title>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styles/dark.css"> <!--- gonna implement some of the switcher --->
 </head>
 <body>
 
