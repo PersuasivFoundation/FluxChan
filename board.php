@@ -90,7 +90,7 @@ $pagedThreads = array_slice($threadFolders, $start, $threadsPerPage);
         <div class="post-header">
             <strong><?= htmlspecialchars($op['name']) ?: 'Anonymous' ?></strong>
             <span style="margin-left: 10px;"><?= date('m/d/y(D)H:i:s', $op['timestamp']) ?></span>
-            <span class="post-id">No.<?= $op['id'] ?></span>
+            <span class="post-id"> No.<?= $op['id'] ?></span>
         </div>
         <div class="post-content">
             <?php if (!empty($op['image']) && file_exists($imagePath)):
@@ -99,10 +99,12 @@ $pagedThreads = array_slice($threadFolders, $start, $threadsPerPage);
                 $dimensions = $dim ? "{$dim[0]}x{$dim[1]}" : "unknown";
                 $filename = basename($op['image']);
             ?>
-            <div class="file-info">
-                File: <a href="<?= $imagePath ?>" target="_blank"><?= $filename ?></a> (<?= $size ?>, <?= $dimensions ?>)
-            </div>
-            <div><img src="<?= $imagePath ?>" style="max-width:200px;"></div>
+          <div class="file-info">
+    File: <a href="<?= $imagePath ?>" target="_blank"><?= $filename ?></a> (<?= $size ?>, <?= $dimensions ?>)
+</div>
+<img src="<?= $imagePath ?>" class="post-image toggle-image" data-full="false" style="max-width:200px; cursor: zoom-in;">
+
+
             <?php endif; ?>
             <?= renderContent(strlen($op['content']) > 500 ? substr($op['content'], 0, 500) . '…' : $op['content']) ?>
         </div>
@@ -123,7 +125,8 @@ $pagedThreads = array_slice($threadFolders, $start, $threadsPerPage);
                     $dimensions = $dim ? "{$dim[0]}x{$dim[1]}" : "unknown";
                     $filename = basename($r['image']);
                     echo "<div class='file-info'>File: <a href='$replyImagePath' target='_blank'>$filename</a> ($size, $dimensions)</div>";
-                    echo "<div><img src='$replyImagePath' style='max-width:200px;'></div>";
+                    echo "<img src='$replyImagePath' class='post-image'>";
+
                 }
                 ?>
                 <?= renderContent($r['content']) ?>
@@ -190,6 +193,31 @@ foreach ($recentReplies as $r) {
     <br>
     <a href="index.php">Back to Board List.</a>
 </div>
+<script>
 
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.post-image').forEach(img => {
+    img.addEventListener('click', () => {
+      img.classList.toggle('expanded');
+    });
+  });
+});
+
+
+document.querySelectorAll('.toggle-image').forEach(img => {
+    img.addEventListener('click', () => {
+        const isFull = img.getAttribute('data-full') === 'true';
+        if (isFull) {
+            img.style.maxWidth = '200px';
+            img.style.cursor = 'zoom-in';
+            img.setAttribute('data-full', 'false');
+        } else {
+            img.style.maxWidth = '100%';
+            img.style.cursor = 'zoom-out';
+            img.setAttribute('data-full', 'true');
+        }
+    });
+});
+</script>
 </body>
 </html>
