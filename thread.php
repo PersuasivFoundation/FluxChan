@@ -33,7 +33,7 @@ function renderContent($text) {
 <head>
     <title>/<?= htmlspecialchars($board) ?>/ - Thread</title>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styles/dark.css">
 </head>
 <body>
 

@@ -70,7 +70,7 @@ $pagedThreads = array_slice($threadFolders, $start, $threadsPerPage);
     <link rel="stylesheet" href="styles/dark.css"> <!--- gonna implement some of the switcher --->
 </head>
 <body>
-
+<a href="index.php">Back to Board List.</a>
 <h1>/<?= htmlspecialchars($board) ?>/</h1>
 
 <form method="post" enctype="multipart/form-data">
@@ -133,6 +133,7 @@ $pagedThreads = array_slice($threadFolders, $start, $threadsPerPage);
     </div>
 
     <?php
+    
 $shown = [$op['id']];
 if (isset($posts[1])) $shown[] = $posts[1]['id'];
 
@@ -184,6 +185,6 @@ foreach ($recentReplies as $r) {
         <?php endif; ?>
     <?php endfor; ?>
 </div>
-
+<a href="index.php">Back to Board List.</a>
 </body>
 </html>

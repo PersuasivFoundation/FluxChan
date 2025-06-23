@@ -6,6 +6,7 @@ $boards = array_filter(glob("boards/*"), "is_dir");
 <html>
 <head><title>OpenChan</title></head>
 <body>
+     <link rel="stylesheet" href="styles/dark.css">
 <h1>Boards</h1>
 <ul>
 <?php foreach ($boards as $path): 
