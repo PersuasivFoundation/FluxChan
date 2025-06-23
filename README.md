@@ -1,1 +1,1 @@
-# OpenChan
+# FluxChan
