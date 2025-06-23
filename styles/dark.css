@@ -16,6 +16,7 @@
             }
             .post {
                 background-color: #1e1e1e;
+                display: table;
                 padding: 10px;
                 margin-top: 10px;
                 border: 1px solid #333;
@@ -26,7 +27,6 @@
                 color: #aaa;
             }
             .post-id {
-                float: right;
                 color: #888;
             }
             .post-content {
@@ -68,3 +68,38 @@
             .greentext {
         color: #789922;
     }
+
+
+.post-image {
+    max-width: 200px;
+    height: auto;
+    cursor: zoom-in;
+}
+
+.post-image.expanded {
+    max-width: none;
+    max-height: 90vh; /* prevent overflowing the screen */
+    cursor: zoom-out;
+}
+
+
+.post {
+    background-color: #222; 
+    padding: 10px; 
+    margin-bottom: 10px; 
+    border: 1px solid #333; 
+}
+
+.post.highlight {
+    animation: highlightFade 1.5s ease-out forwards; 
+    background-color: #4a4a2a; 
+}
+
+@keyframes highlightFade {
+    from {
+        background-color: #4a4a2a; 
+    }
+    to {
+        background-color: #222;
+    }
+}
