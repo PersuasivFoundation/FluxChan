@@ -116,8 +116,8 @@ $pagedThreads = array_slice($threadFolders, $start, $threadsPerPage);
             </div>
             <div class="post-content">
                 <?php
-                $replyImagePath = "$folder/{$r['image']}";
-                if (!empty($r['image']) && file_exists($replyImagePath)) {
+                $replyImagePath = isset($r['image']) ? "$folder/{$r['image']}" : '';
+                if (isset($r['image']) && !empty($r['image']) && file_exists($replyImagePath)) {
                     $size = round(filesize($replyImagePath) / 1024) . " KB";
                     $dim = @getimagesize($replyImagePath);
                     $dimensions = $dim ? "{$dim[0]}x{$dim[1]}" : "unknown";
@@ -142,7 +142,7 @@ foreach ($recentReplies as $r) {
     if (in_array($r['id'], $shown)) continue;
 
 
-        $replyImagePath = "$folder/{$r['image']}";
+        $replyImagePath = isset($r['image']) ? "$folder/{$r['image']}" : '';
     ?>
     <div class="post">
         <div class="post-header">
@@ -152,7 +152,7 @@ foreach ($recentReplies as $r) {
         </div>
         <div class="post-content">
             <?php
-            if (!empty($r['image']) && file_exists($replyImagePath)) {
+            if (isset($r['image']) && !empty($r['image']) && file_exists($replyImagePath)) {
                 $size = round(filesize($replyImagePath) / 1024) . " KB";
                 $dim = @getimagesize($replyImagePath);
                 $dimensions = $dim ? "{$dim[0]}x{$dim[1]}" : "unknown";
@@ -166,17 +166,20 @@ foreach ($recentReplies as $r) {
     </div>
     <?php } ?>
 
-    <?php if ($replyCount > 3): ?>
-        <div class="omitted"><?= $replyCount - 3 ?> repl<?= $replyCount - 3 === 1 ? "y" : "ies" ?> omitted.</div>
-    <?php endif; ?>
-
-    <div style="margin-top:10px;">
-        <a href="thread.php?board=<?= $board ?>&id=<?= $op['id'] ?>">[View Thread]</a>
+<?php if ($replyCount > 3): ?>
+    <div class="omitted">
+        <?= $replyCount - 3 ?> repl<?= $replyCount - 3 === 1 ? "y" : "ies" ?> omitted.
     </div>
+<?php endif; ?>
+<div class="post-footer">
+    <a href="thread.php?board=<?= $board ?>&id=<?= $op['id'] ?>">[View Thread]</a>
+</div>
+
+
 </div>
 <?php endforeach; ?>
 
-<div class="pagination">
+<div class="post pagination">
     <?php for ($i = 1; $i <= $totalPages; $i++): ?>
         <?php if ($i == $page): ?>
             <strong>[<?= $i ?>]</strong>
@@ -184,7 +187,9 @@ foreach ($recentReplies as $r) {
             <a href="?board=<?= $board ?>&page=<?= $i ?>">[<?= $i ?>]</a>
         <?php endif; ?>
     <?php endfor; ?>
+    <br>
+    <a href="index.php">Back to Board List.</a>
 </div>
-<a href="index.php">Back to Board List.</a>
+
 </body>
 </html>
