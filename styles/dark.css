@@ -1,70 +1,70 @@
-        body {
-            background-color: #222;
-            color: #ccc;
-            font-family: sans-serif;
-            margin: 20px;
-        }
-        a {
-            color: #89b4fa;
-            text-decoration: none;
-        }
-        .thread {
-            border: 1px solid #444;
-            padding: 10px;
-            background-color: #2c2c2c;
-            margin-bottom: 20px;
-        }
-        .post {
-            background-color: #1e1e1e;
-            padding: 10px;
-            margin-top: 10px;
-            border: 1px solid #333;
-            
-        }
-        .post-header {
-            font-size: 0.9em;
-            color: #aaa;
-        }
-        .post-id {
-            float: right;
-            color: #888;
-        }
-        .post-content {
-            margin-top: 5px;
-            word-wrap: break-word;
-            white-space: normal;
-        }
-        .inline-reply {
-            border: 1px solid #555;
-            background-color: #1a1a1a;
-            padding: 5px;
-            margin-top: 10px;
-            font-size: 0.85em;
-        }
-        .omitted {
-            font-size: 0.85em;
-            color: #999;
-            margin-top: 10px;
-        }
-        form {
-            margin-bottom: 30px;
-            border: 1px solid #333;
-            padding: 15px;
-            background-color: #1a1a1a;
-        }
-        input, textarea, button {
-            width: 100%;
-            background-color: #333;
-            color: #eee;
-            border: 1px solid #555;
-            padding: 5px;
-            margin-top: 5px;
-            box-sizing: border-box;
-        }
-        button {
-            cursor: pointer;
-        }
+            body {
+                background-color: #222;
+                color: #ccc;
+                font-family: sans-serif;
+                margin: 20px;
+            }
+            a {
+                color: #89b4fa;
+                text-decoration: none;
+            }
+            .thread {
+                border: 1px solid #444;
+                padding: 10px;
+                background-color: #2c2c2c;
+                margin-bottom: 20px;
+            }
+            .post {
+                background-color: #1e1e1e;
+                padding: 10px;
+                margin-top: 10px;
+                border: 1px solid #333;
+                
+            }
+            .post-header {
+                font-size: 0.9em;
+                color: #aaa;
+            }
+            .post-id {
+                float: right;
+                color: #888;
+            }
+            .post-content {
+                margin-top: 5px;
+                word-wrap: break-word;
+                white-space: normal;
+            }
+            .inline-reply {
+                border: 1px solid #555;
+                background-color: #1a1a1a;
+                padding: 5px;
+                margin-top: 10px;
+                font-size: 0.85em;
+            }
+            .omitted {
+                font-size: 0.85em;
+                color: #999;
+                margin-top: 10px;
+            }
+            form {
+                margin-bottom: 30px;
+                border: 1px solid #333;
+                padding: 15px;
+                background-color: #1a1a1a;
+            }
+            input, textarea, button {
+                width: 100%;
+                background-color: #333;
+                color: #eee;
+                border: 1px solid #555;
+                padding: 5px;
+                margin-top: 5px;
+                box-sizing: border-box;
+            }
+            button {
+                cursor: pointer;
+            }
 
-        .greentext {
-    color: #789922;
-}
+            .greentext {
+        color: #789922;
+    }
