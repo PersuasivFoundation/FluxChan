@@ -15,11 +15,10 @@
                 margin-bottom: 20px;
             }
             .post {
-                background-color: #1e1e1e;
                 display: table;
                 padding: 10px;
                 margin-top: 10px;
-                border: 1px solid #333;
+                background-color: #1c1c1c;
                 
             }
             .post-header {
@@ -31,6 +30,7 @@
             }
             .post-content {
                 margin-top: 5px;
+                margin-bottom: 3px;
                 word-wrap: break-word;
                 white-space: normal;
             }
@@ -78,28 +78,29 @@
 
 .post-image.expanded {
     max-width: none;
-    max-height: 90vh; /* prevent overflowing the screen */
+    max-height: 90vh; 
     cursor: zoom-out;
 }
 
-
-.post {
-    background-color: #222; 
-    padding: 10px; 
-    margin-bottom: 10px; 
-    border: 1px solid #333; 
-}
-
 .post.highlight {
-    animation: highlightFade 1.5s ease-out forwards; 
-    background-color: #4a4a2a; 
+background-color: #4d4d4d !important;
+transition: background-color 0.3s ease;
 }
 
-@keyframes highlightFade {
-    from {
-        background-color: #4a4a2a; 
-    }
-    to {
-        background-color: #222;
-    }
+        #clipboardImageStatus {
+            margin-left: 10px;
+            color: #ccc; 
+            font-size: 0.9em;
+        }
+
+.toggle-image {
+max-width: 200px;
+height: auto;
+cursor: zoom-in;
+transition: all 0.3s ease-in-out;
+}
+
+.toggle-image.expanded {
+    max-width: none;
+    width: auto;
 }
