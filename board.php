@@ -102,12 +102,12 @@ $pagedThreads = array_slice($threadFolders, $start, $threadsPerPage);
           <div class="file-info">
     File: <a href="<?= $imagePath ?>" target="_blank"><?= $filename ?></a> (<?= $size ?>, <?= $dimensions ?>)
 </div>
-<img src="<?= $imagePath ?>" class="post-image toggle-image" data-full="false" style="max-width:200px; cursor: zoom-in;">
-
-
-            <?php endif; ?>
-            <?= renderContent(strlen($op['content']) > 500 ? substr($op['content'], 0, 500) . '…' : $op['content']) ?>
-        </div>
+<?php endif; ?>
+<div class="post-body">
+    <img src="<?= $imagePath ?>" class="post-image toggle-image" data-full="false" style="max-width:200px; cursor: zoom-in; display: block; margin-bottom: 5px;">
+    <div class="post-text" style="clear: both;"> <?= renderContent(strlen($op['content']) > 500 ? substr($op['content'], 0, 500) . '…' : $op['content']) ?>
+    </div>
+</div>
 
         <?php if (isset($posts[1])): $r = $posts[1]; ?>
         <div class="inline-reply">
@@ -182,17 +182,7 @@ foreach ($recentReplies as $r) {
 </div>
 <?php endforeach; ?>
 
-<div class="post pagination">
-    <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-        <?php if ($i == $page): ?>
-            <strong>[<?= $i ?>]</strong>
-        <?php else: ?>
-            <a href="?board=<?= $board ?>&page=<?= $i ?>">[<?= $i ?>]</a>
-        <?php endif; ?>
-    <?php endfor; ?>
-    <br>
-    <a href="index.php">Back to Board List.</a>
-</div>
+
 <script>
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -219,5 +209,19 @@ document.querySelectorAll('.toggle-image').forEach(img => {
     });
 });
 </script>
+</div>
+ <a href="index.php">Back to Board List.</a>
+
+ <div class="post pagination">
+    <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+        <?php if ($i == $page): ?>
+            <strong>[<?= $i ?>]</strong>
+        <?php else: ?>
+            <a href="?board=<?= $board ?>&page=<?= $i ?>">[<?= $i ?>]</a>
+        <?php endif; ?>
+    <?php endfor; ?>
+    <br>
+   
+</div>
 </body>
 </html>
