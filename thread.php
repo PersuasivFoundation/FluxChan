@@ -111,30 +111,7 @@ function renderContent($text) {
     <title>/<?= htmlspecialchars($board) ?>/ - Thread</title>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="styles/dark.css">
-    <style>
-        .post.highlight {
-            background-color: #555; 
-            transition: background-color 0.5s ease-in-out;
-        }
-        #clipboardImageStatus {
-            margin-left: 10px;
-            color: #ccc; 
-            font-size: 0.9em;
-        }
 
-        .toggle-image {
-    max-width: 200px;
-    height: auto;
-    cursor: pointer;
-    transition: all 0.3s ease-in-out;
-}
-
-.toggle-image.expanded {
-    max-width: none;
-    width: auto;
-}
-
-    </style>
 </head>
 <body>
 
