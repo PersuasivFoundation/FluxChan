@@ -4,7 +4,7 @@ $boards = array_filter(glob("boards/*"), "is_dir");
 
 <!DOCTYPE html>
 <html>
-<head><title>OpenChan</title></head>
+<head><title>FluxChan</title></head>
 <body>
      <link rel="stylesheet" href="styles/dark.css">
 <h1>Boards</h1>
