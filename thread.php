@@ -307,4 +307,5 @@ window.addEventListener('load', () => {
 </script>
 
 </body>
+<footer>&copy powered by <a href="https://github.com/PersuasivFoundation/FluxChan">Fluxchan</a>
 </html>

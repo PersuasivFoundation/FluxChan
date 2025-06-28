@@ -223,5 +223,6 @@ document.querySelectorAll('.toggle-image').forEach(img => {
     <br>
    
 </div>
+<footer>&copy powered by <a href="https://github.com/PersuasivFoundation/FluxChan">Fluxchan</a>
 </body>
 </html>

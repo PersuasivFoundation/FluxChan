@@ -4,35 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>404 - Not Found</title>
-    <link rel="stylesheet" href="style.css">
-    <style>
-        body {
-            text-align: center;
-            padding: 40px;
-            font-family: sans-serif;
-            background: #f4f4f4;
-            color: #333;
-        }
-        h1 {
-            font-size: 48px;
-            margin-bottom: 10px;
-        }
-        p {
-            font-size: 20px;
-        }
-        a {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 10px 15px;
-            background: #007bff;
-            color: white;
-            text-decoration: none;
-            border-radius: 6px;
-        }
-        a:hover {
-            background: #0056b3;
-        }
-    </style>
+    <link rel="stylesheet" href="styles/dark.css">
 </head>
 <body>
 
@@ -41,4 +13,5 @@
     <a href="index.php">← Return to Home</a>
 
 </body>
+<footer>&copy powered by <a href="https://github.com/PersuasivFoundation/FluxChan">Fluxchan</a>
 </html>

@@ -14,5 +14,6 @@ $boards = array_filter(glob("boards/*"), "is_dir");
     <li><a href="board.php?board=<?= $board ?>">/<?= $board ?>/</a></li>
 <?php endforeach; ?>
 </ul>
+<footer>&copy powered by <a href="https://github.com/PersuasivFoundation/FluxChan">Fluxchan</a>
 </body>
 </html>
