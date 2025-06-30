@@ -19,7 +19,7 @@
                 padding: 10px;
                 margin-top: 10px;
                 background-color: #1c1c1c;
-                
+                border: 1px solid #555;
             }
             .post-header {
                 font-size: 0.9em;
