@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     file_put_contents("$threadFolder/post.json", json_encode([$thread], JSON_PRETTY_PRINT));
 
-    header("Location: board.php?board=$board");
+    header("Location: thread.php?board=$board&id=$id");
     exit;
 }
 
