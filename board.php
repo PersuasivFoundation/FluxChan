@@ -210,6 +210,7 @@ document.querySelectorAll('.toggle-image').forEach(img => {
 });
 </script>
 </div>
+</div>
  <a href="index.php">Back to Board List.</a>
 
  <div class="post pagination">
