@@ -3,4 +3,4 @@ Fluxchan is a free and open source Imageboard Software written in PHP. This soft
 
 
 ### License
-Fluxchan is officially licensed as GPL-2.0-only.
+Fluxchan is officially licensed as GPL-2.0-or-later
