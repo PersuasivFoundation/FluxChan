@@ -1,5 +1,5 @@
 # FluxChan
-Fluxchan is a free and open source Imageboard Software written in PHP. This software does not use any SQL software ( MariaDB, PostgreSQL, SQLite, MySQL ) but uses a JSON database instead.
+Fluxchan is a free and open source Imageboard Software written in PHP. This software does not use any SQL software ( such as MariaDB, PostgreSQL, SQLite, MySQL ) but uses a JSON database instead.
 
 
 
