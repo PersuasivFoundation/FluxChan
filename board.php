@@ -213,7 +213,7 @@ document.querySelectorAll('.toggle-image').forEach(img => {
 </div>
  <a href="index.php">Back to Board List.</a>
 
- <div class="post pagination">
+ <div class="post-pagination">
     <?php for ($i = 1; $i <= $totalPages; $i++): ?>
         <?php if ($i == $page): ?>
             <strong>[<?= $i ?>]</strong>
