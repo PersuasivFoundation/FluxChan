@@ -88,6 +88,7 @@
 
 .post.highlight {
 background-color: #4d4d4d !important;
+transition: background-color 0.5s ease;
 }
 
         #clipboardImageStatus {
@@ -100,7 +101,6 @@ background-color: #4d4d4d !important;
 max-width: 200px;
 height: auto;
 cursor: zoom-in;
-transition: all 0.3s ease-in-out;
 }
 
 .toggle-image.expanded {
