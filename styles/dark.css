@@ -108,3 +108,9 @@ transition: all 0.3s ease-in-out;
     max-width: none;
     width: auto;
 }
+
+.post-pagination{
+
+    padding: 6px;
+
+}
