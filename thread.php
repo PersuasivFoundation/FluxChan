@@ -270,11 +270,11 @@ $displaySrc = $fullURL;
                         
                         const file = new File([blob], "clipboard-image.png", { type: blob.type });
                         
-                        // Create a DataTransfer object to hold the file
+                       
                         const dataTransfer = new DataTransfer();
                         dataTransfer.items.add(file);
                         
-                        // Assign the DataTransfer object's files to the hidden input
+                       
                         imageInput.files = dataTransfer.files;
                         foundImage = true;
                         event.preventDefault(); 
@@ -294,15 +294,19 @@ $displaySrc = $fullURL;
 
         // Clear the hidden clipboard image input and status if the user manually selects an image
         manualImageInput.addEventListener('change', (event) => {
-            if (event.target.files.length > 0) {
-                imageInput.value = ''; 
-                clipboardImageStatus.style.display = 'none'; 
-                clipboardImageStatus.textContent = ''; 
-                 previewImage(file); 
-            }
-        });
+    const file = event.target.files[0];
 
-        // Also clear clipboard image status if the user focuses on textarea and no image is manually selected
+    if (file) {
+        imageInput.value = ''; 
+        clipboardImageStatus.style.display = 'none';
+        clipboardImageStatus.textContent = '';
+
+        previewImage(file); 
+    }
+});
+
+
+        // When the user focuses on the textarea, clear any clipboard image status if no image has been manually selected.
         postContentTextarea.addEventListener('focus', () => {
             if (manualImageInput.files.length === 0 && imageInput.files.length === 0) {
                 clipboardImageStatus.style.display = 'none';
@@ -358,7 +362,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function previewImage(file) {
     const container = document.getElementById('imagePreviewContainer');
-    container.innerHTML = ''; // clear previous
+    container.innerHTML = ''; // clear previous preview
 
     const reader = new FileReader();
     reader.onload = function (e) {
@@ -372,6 +376,7 @@ function previewImage(file) {
     };
     reader.readAsDataURL(file);
 }
+
 
 </script>
 
