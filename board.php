@@ -1,13 +1,25 @@
 <?php
+session_start();
 $board = $_GET['board'] ?? '';
 if (!preg_match('/^\w+$/', $board) || !is_dir("boards/$board")) die("Invalid board.");
+
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
 
 $boardDir = "boards/$board";
 $threadsDir = "$boardDir/threads";
 @mkdir($threadsDir, 0777, true);
+if (!is_dir($threadsDir) && !mkdir($threadsDir, 0777, true)) {
+    die("Failed to create thread directory.");
+}
 
 // Handle new thread
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== ($_SESSION['csrf_token'] ?? '')) {
+        die("CSRF token mismatch.");
+    }
+
     $name = 'Anonymous';
     $content = trim($_POST['content'] ?? '');
 
@@ -18,9 +30,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     $image = $_FILES['image'];
+
+
+$maxSize = 200 * 1024 * 1024;
+if ($image['size'] > $maxSize) {
+    die("Image too large. Max 200MB.");
+}
+
+$ext = strtolower(pathinfo($image['name'], PATHINFO_EXTENSION));
+
+
     $ext = strtolower(pathinfo($image['name'], PATHINFO_EXTENSION));
     $allowed = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
     if (!in_array($ext, $allowed)) die("Invalid image type.");
+
+    $finfo = new finfo(FILEINFO_MIME_TYPE);
+$mimeType = $finfo->file($image['tmp_name']);
+$allowedMime = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+if (!in_array($mimeType, $allowedMime)) {
+    die("Invalid image MIME type.");
+}
 
     $id = bin2hex(random_bytes(5));
     $threadFolder = "$threadsDir/$id";
@@ -50,6 +79,7 @@ function renderContent($text) {
     return nl2br($escaped);
 }
 
+
 $threadFolders = glob("$threadsDir/*", GLOB_ONLYDIR);
 usort($threadFolders, function($a, $b) {
     return filemtime("$b/post.json") <=> filemtime("$a/post.json");
@@ -74,9 +104,12 @@ $pagedThreads = array_slice($threadFolders, $start, $threadsPerPage);
 <h1>/<?= htmlspecialchars($board) ?>/</h1>
 
 <form method="post" enctype="multipart/form-data">
+    <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token']) ?>">
     <textarea name="content" placeholder="Create new thread..." required></textarea>
-    <input type="file" name="image" accept="image/*" required>
+    <input type="file" name="image" id="imageInput" accept="image/*" required>
     <button type="submit">Create Thread</button>
+    <img id="imagePreview" style="max-width: 200px; display: none; margin-top: 10px;">
+
 </form>
 
 <?php foreach ($pagedThreads as $folder):
@@ -100,11 +133,19 @@ $pagedThreads = array_slice($threadFolders, $start, $threadsPerPage);
                 $filename = basename($op['image']);
             ?>
           <div class="file-info">
-    File: <a href="<?= $imagePath ?>" target="_blank"><?= $filename ?></a> (<?= $size ?>, <?= $dimensions ?>)
+    <span>File:</span> <a href="<?= $imagePath ?>" target="_blank"><?= $filename ?></a> (<?= $size ?>, <?= $dimensions ?>)
 </div>
+<?php
+?>
+<img src="<?= $imagePath ?>"
+     class="post-image toggle-image"
+     data-full="false"
+     data-thumb="<?= $imagePath ?>"
+     data-fullsrc="<?= $imagePath ?>"
+     style="max-width:200px; cursor: zoom-in; display: block; margin-bottom: 5px;">
+
 <?php endif; ?>
-<div class="post-body">
-    <img src="<?= $imagePath ?>" class="post-image toggle-image" data-full="false" style="max-width:200px; cursor: zoom-in; display: block; margin-bottom: 5px;">
+
     <div class="post-text" style="clear: both;"> <?= renderContent(strlen($op['content']) > 500 ? substr($op['content'], 0, 500) . '…' : $op['content']) ?>
     </div>
 </div>
@@ -184,31 +225,96 @@ foreach ($recentReplies as $r) {
 
 
 <script>
+   document.querySelector('form').addEventListener('submit', (e) => {
+    if (!input.files.length) {
+        e.preventDefault();
+        alert('Please upload or paste an image.');
+    }
+});
+ 
+const input = document.getElementById('imageInput');
+const preview = document.getElementById('imagePreview');
 
-document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('.post-image').forEach(img => {
-    img.addEventListener('click', () => {
-      img.classList.toggle('expanded');
-    });
-  });
+let currentSource = 'none'; // 'pasted' or 'selected'
+
+function showImagePreview(file) {
+    if (!file || !file.type.startsWith('image/')) {
+        preview.style.display = 'none';
+        preview.src = '';
+        currentSource = 'none';
+        return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = function (e) {
+        preview.src = e.target.result;
+        preview.style.display = 'block';
+    };
+    reader.readAsDataURL(file);
+}
+
+// Handle paste
+document.addEventListener('paste', (event) => {
+    const items = event.clipboardData.items;
+    for (let item of items) {
+        if (item.type.startsWith('image/')) {
+            const file = item.getAsFile();
+            if (file) {
+                const dataTransfer = new DataTransfer();
+                dataTransfer.items.add(file);
+                input.files = dataTransfer.files;
+                showImagePreview(file);
+                currentSource = 'pasted';
+                break;
+            }
+        }
+    }
 });
 
-
-document.querySelectorAll('.toggle-image').forEach(img => {
-    img.addEventListener('click', () => {
-        const isFull = img.getAttribute('data-full') === 'true';
-        if (isFull) {
-            img.style.maxWidth = '200px';
-            img.style.cursor = 'zoom-in';
-            img.setAttribute('data-full', 'false');
+// Optional: Warn or block if clicking input after paste
+input.addEventListener('click', (e) => {
+    if (currentSource === 'pasted') {
+        const replace = confirm("You pasted an image. Do you want to replace it by selecting a file?");
+        if (!replace) {
+            e.preventDefault();
         } else {
-            img.style.maxWidth = '100%';
-            img.style.cursor = 'zoom-out';
-            img.setAttribute('data-full', 'true');
+            // Clear input to avoid residual 'temp' weirdness
+            input.value = "";
+            preview.src = "";
+            preview.style.display = "none";
+            currentSource = 'none';
         }
+    }
+});
+
+// Handle file select
+input.addEventListener('change', function () {
+    const file = this.files[0];
+    showImagePreview(file);
+    currentSource = 'selected';
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.toggle-image').forEach(img => {
+        img.addEventListener('click', () => {
+            const isFull = img.getAttribute('data-full') === 'true';
+
+            if (isFull) {
+                img.src = img.getAttribute('data-thumb');
+                img.style.maxWidth = '200px';
+                img.style.cursor = 'zoom-in';
+                img.setAttribute('data-full', 'false');
+            } else {
+                img.src = img.getAttribute('data-fullsrc');
+                img.style.maxWidth = '100%';
+                img.style.cursor = 'zoom-out';
+                img.setAttribute('data-full', 'true');
+            }
+        });
     });
 });
 </script>
+
 </div>
 </div>
  <a href="index.php">Back to Board List.</a>
